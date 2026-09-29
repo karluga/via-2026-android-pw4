@@ -20,10 +20,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.calculator.CalculatorScreen
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 @PreviewScreenSizes
 @Composable
 fun MyApplicationApp() {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.CALCULATOR) }
 
     // Wrap the entire app hierarchy in a SelectionContainer to make all text globally selectable
     SelectionContainer {
@@ -66,6 +66,7 @@ fun MyApplicationApp() {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                 // Dynamic page switching based on current state
                 when (currentDestination) {
+                    AppDestinations.CALCULATOR -> CalculatorScreen(modifier = Modifier.padding(innerPadding))
                     AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
                     AppDestinations.FAVORITES -> FavoritesScreen(modifier = Modifier.padding(innerPadding))
                     AppDestinations.PROFILE -> ProfileScreen(modifier = Modifier.padding(innerPadding))
@@ -79,24 +80,25 @@ enum class AppDestinations(
     val label: String,
     val icon: Int,
 ) {
+    CALCULATOR("Calculator", R.drawable.ic_calculator),
     HOME("Home", R.drawable.among_us_6008615_1920),
     FAVORITES("Favorites", R.drawable.ic_favorite),
     PROFILE("Profile", R.drawable.ic_account_box),
 }
 
-
 @Preview(showBackground = true)
-
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    Text(text = "This is the first application from Group 2:\n" +
-            "Kārlis Ivars Braķis\n" +
-            "Andrejs Ņesterovičs\n" +
-            "\tAnd the application was developed by\n" +
-            "Kārlis Ivars Braķis",
+    Text(
+        text = "This is the first application from Group 2:\n" +
+                "Kārlis Ivars Braķis\n" +
+                "Andrejs Ņesterovičs\n" +
+                "\tAnd the application was developed by\n" +
+                "Kārlis Ivars Braķis",
         modifier = modifier,
-        fontSize = 40.sp,       // Lowered slightly to fit well
-        lineHeight = 40.sp)
+        fontSize = 40.sp,
+        lineHeight = 40.sp
+    )
 }
 
 @Composable
